@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class Users extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -30,4 +31,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function cart() {
+        return $this->hasMany(CartItems::class, 'user_id');
+    }
+
+    public function order() {
+        return $this->hasMany(Orders::class, 'user_id');
+    }
+
+
 }
